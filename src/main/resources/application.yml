@@ -43,10 +43,6 @@ spring:
 # HikariCP (Spring Boot 2.x 默认使用的连接池)
 #    hikari: *
 
-# mybatis
-mybatis:
-  mapperLocations: classpath:mapper/*.xml
-
 
 # mongodb
   data:
@@ -76,6 +72,9 @@ mybatis:
 
 
 
+# mybatis
+mybatis:
+  mapperLocations: classpath:mapper/*.xml
 # log4j2
 logging:
   config: classpath:log4j2.yml
