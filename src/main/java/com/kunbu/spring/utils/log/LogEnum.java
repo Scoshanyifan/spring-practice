@@ -3,7 +3,7 @@ package com.kunbu.spring.utils.log;
 /**
  * @author: KunBu
  * @time: 2019/8/7 11:02
- * @description:
+ * @description: 日志类型
  */
 public enum LogEnum {
 
@@ -11,14 +11,13 @@ public enum LogEnum {
     EXECUTOR("Executor"),
     METHOD_CONSUME("Method-consume"),
 
-
     ;
 
-    private String name;
-
-    private LogEnum(String name){
+    LogEnum(String name){
         this.name = name;
     }
+
+    private String name;
 
     public String getName() {
         return name;

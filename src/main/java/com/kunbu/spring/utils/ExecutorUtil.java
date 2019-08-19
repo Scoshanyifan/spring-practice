@@ -1,7 +1,7 @@
 package com.kunbu.spring.utils;
 
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
-import com.kunbu.spring.utils.log.LogFactory;
+import com.kunbu.spring.utils.log.LoggerUtil;
 import org.slf4j.Logger;
 
 import java.util.concurrent.*;
@@ -14,7 +14,7 @@ import java.util.concurrent.*;
  **/
 public class ExecutorUtil {
 
-    private static final Logger log = LogFactory.getExecutorLogger();
+    private static final Logger log = LoggerUtil.getExecutorLogger();
 
     private static int cpuSize = Runtime.getRuntime().availableProcessors();
 
@@ -24,7 +24,7 @@ public class ExecutorUtil {
             0L,
             TimeUnit.MILLISECONDS,
             new LinkedBlockingDeque<>(1024),
-            new ThreadFactoryBuilder().setNameFormat("lunar-pool-%d").build(),
+            new ThreadFactoryBuilder().setNameFormat("kunbu-pool-%d").build(),
             new ThreadPoolExecutor.AbortPolicy()) {
 
         @Override

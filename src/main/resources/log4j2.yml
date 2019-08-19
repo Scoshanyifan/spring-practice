@@ -1,6 +1,8 @@
 Confiuration:
   # 用来指定log4j本身的打印日志的级别，8个级别：ALL < TRACE < DEBUG < INFO < WARN < ERROR < FATAL < OFF
   status: warn
+  # 用于指定log4j自动重新配置的监测间隔时间，单位是s,最小是5s
+  monitorinterval: 30
 
   # 定义全局变量
   Properties:
@@ -15,7 +17,7 @@ Confiuration:
         value: D:/kunbu/spring-practice/log/error
       # 日志格式
       - name: LOG.PATTERN
-        value: "%d{yyyy-MM-dd HH:mm:ss SSS} %-5p [%t]  %c{1}: %L : %m%n"
+        value: "%d{yyyy-MM-dd HH:mm:ss SSS} [%highlight{%level}] %c{1}: %L : %m%n"
 
   # 日志管道（保存在哪）
   Appenders:
@@ -25,21 +27,25 @@ Confiuration:
       target: SYSTEM_OUT
       PatternLayout:
         pattern: ${LOG.PATTERN}
-    # 输出到文件
+    # 输出到文件（用来定义超过指定大小自动删除旧的创建新的的Appender）
     RollingFile:
       # 普通日志
       - name: ROLLING_FILE
-        # 文件名
+        # 指定输出日志的目的文件带全路径的文件名（当前使用中的）
         fileName: ${LOG_PATH}/app.log
-        # 文件格式
+        # 指定新建日志文件的名称格式（历史日志文件）
         filePattern: "${LOG_PATH}/farm-%d{yyyy-MM-dd}-%i.log"
         PatternLayout:
           pattern: ${LOG.PATTERN}
+        # 指定滚动日志的策略（何时进行新建日志文件输出日志）
         Policies:
-          # 按天保存
+          # 基于时间的滚动策略
           TimeBasedTriggeringPolicy:
+            # 用于调整时间
             modulate: true
+            # 按天保存
             interval: 1
+        # 文件最多90（即保存最近3个月记录）
         DefaultRolloverStrategy:
           max: 90
       # 异常日志
@@ -49,11 +55,11 @@ Confiuration:
         PatternLayout:
           pattern: ${LOG.PATTERN}
         Policies:
-          # 按文件大小保存
+          # 基于指定文件大小的滚动策略（按文件大小保存）
           SizeBasedTriggeringPolicy:
             size: "50 MB"
-          DefaultRolloverStrategy:
-            max: 10
+        DefaultRolloverStrategy:
+          max: 10
       # 线程池日志
       - name: EXECUTOR_THREAD_FILE
         fileName: ${LOG_ERROR_PATH}/thread.log
@@ -61,11 +67,10 @@ Confiuration:
         PatternLayout:
           pattern: ${LOG.PATTERN}
         Policies:
-          # 按文件大小保存
           SizeBasedTriggeringPolicy:
             size: "50 MB"
-          DefaultRolloverStrategy:
-            max: 10
+        DefaultRolloverStrategy:
+          max: 10
       # 方法耗时日志
       - name: METHOD_CONSUME_FILE
         fileName: ${LOG_ERROR_PATH}/method-consume.log
@@ -73,28 +78,31 @@ Confiuration:
         PatternLayout:
           pattern: ${LOG.PATTERN}
         Policies:
-          # 按文件大小保存
           SizeBasedTriggeringPolicy:
             size: "50 MB"
-          DefaultRolloverStrategy:
-            max: 10
+        DefaultRolloverStrategy:
+          max: 10
 
-  # 路由器（指定日志流向哪个管道，并控制级别）
+  # 路由器
   Loggers:
     Root:
+      # 控制输出级别
       level: ${LOG.LEVEL.CONSOLE}
+      # 用来指定该日志输出到哪个Appender（指定日志流向哪个管道）
       AppenderRef:
         - ref: CONSOLE
         - ref: ROLLING_FILE
           level: info
         - ref: ERROR_FILE
           level: error
+    # 单独指定日志的形式
     Logger:
       # 对应Appender中的线程日志和方法耗时日志
       - name: Executor
         level: info
         AppenderRef:
         - ref: EXECUTOR_THREAD_FILE
+        # name在代码中指定（LogEnum）获取，就能在此Appender下打印
       - name: Method-consume
         level: info
         AppenderRef:

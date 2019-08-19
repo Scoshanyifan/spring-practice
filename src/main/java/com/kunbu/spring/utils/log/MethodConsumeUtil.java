@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
 @Aspect
 public class MethodConsumeUtil {
 
-    private static final Logger logger = LogFactory.getMethodConsumeLogger();
+    private static final Logger logger = LoggerUtil.getMethodConsumeLogger();
 
     @Pointcut("execution(* com.kunbu.spring.service..*.*(..))")
     public void pointCut() {}
