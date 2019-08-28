@@ -43,7 +43,7 @@ public class RequestLogUtil {
      * ..*.中的*表示一个单词，即任意类，后面的.是包名的.
      * ..*.*(..)中第二个*表示任意方法，(..)表示方法中任意参数
      **/
-    @Pointcut("execution(* com.kunbu.spring.controller..*.*(..))")
+    @Pointcut("execution(* com.kunbu.spring.controller..*.*(..)) || @annotation(com.kunbu.spring.annotation.LogAnnotation)")
     public void pointCut() {}
 
     @Around("pointCut()")
