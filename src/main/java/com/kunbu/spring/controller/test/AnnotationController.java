@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
+ * 测试注解说明
  * @program: spring-practice
- * @description: 测试注解说明
  * @author: kunbu
  * @create: 2019-08-03 14:57
  **/
