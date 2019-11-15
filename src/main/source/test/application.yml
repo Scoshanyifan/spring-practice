@@ -1,4 +1,3 @@
-
 spring:
   application:
     name: kunbu-spring
@@ -35,23 +34,23 @@ spring:
       validation-query: SELECT 1
 
 
-#    原生的数据库连接，默认使用HikariCP连接池
-#    driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: jdbc:mysql://localhost:3306/scosyf?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai
-#    username: root
-#    password:
-# HikariCP (Spring Boot 2.x 默认使用的连接池)
-#    hikari: *
+  #    原生的数据库连接，默认使用HikariCP连接池
+  #    driver-class-name: com.mysql.cj.jdbc.Driver
+  #    url: jdbc:mysql://localhost:3306/scosyf?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai
+  #    username: root
+  #    password:
+  # HikariCP (Spring Boot 2.x 默认使用的连接池)
+  #    hikari: *
 
 
-# mongodb
+  # mongodb
   data:
     mongodb:
       uri: mongodb://localhost/kunbu
       port: 27017
       username:
       password:
-# redis
+  # redis
   redis:
     host: 10.45.33.195
     # Redis服务器连接端口

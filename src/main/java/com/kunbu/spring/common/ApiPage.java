@@ -20,7 +20,8 @@ public class ApiPage implements Serializable {
     private long totalCount;
     private Object list;
 
-    private ApiPage() {}
+    private ApiPage() {
+    }
 
     public static ApiPage empty(long pageNum, long pageSize) {
         ApiPage page = new ApiPage();

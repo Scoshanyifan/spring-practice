@@ -21,7 +21,8 @@ public class MethodConsumeUtil {
     private static final Logger logger = LoggerUtil.getMethodConsumeLogger();
 
     @Pointcut("execution(* com.kunbu.spring.service..*.*(..))")
-    public void pointCut() {}
+    public void pointCut() {
+    }
 
     @Around("pointCut()")
     public Object methodConsume(ProceedingJoinPoint joinPoint) {
@@ -32,7 +33,7 @@ public class MethodConsumeUtil {
             logger.error(">>> method consume aop error:", e);
         } finally {
             long timeCost = System.currentTimeMillis() - startTime;
-            if(timeCost >= CommonConstant.SERVICE_CONSUMPTION_MILLIONS) {
+            if (timeCost >= CommonConstant.SERVICE_CONSUMPTION_MILLIONS) {
                 logger.warn("consume:{} ms, method:{}", timeCost, joinPoint.getSignature().toShortString());
             }
         }

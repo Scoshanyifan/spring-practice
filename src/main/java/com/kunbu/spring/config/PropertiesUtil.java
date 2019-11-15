@@ -2,6 +2,7 @@ package com.kunbu.spring.config;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,6 +16,7 @@ import java.util.Properties;
  * @author: kunbu
  * @create: 2019-08-28 13:29
  **/
+@Component
 public class PropertiesUtil {
 
     private static final Logger logger = LoggerFactory.getLogger(PropertiesUtil.class);

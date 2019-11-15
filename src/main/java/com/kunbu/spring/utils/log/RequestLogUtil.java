@@ -38,13 +38,16 @@ public class RequestLogUtil {
      * * com.kunbu.spring.controller..*.*(..) 表示controller包以及其下子包中的类，类中的所有方法
      * * com.kunbu.spring.controller.*.*(..)) 则仅表示controller包下的类
      *
+     * @annotation(com.kunbu.spring.annotation.LogAnnotation) 表示有此注释的也会被aop拦截，用于通配符无法到达的如service层
+     * <p>
      * 第一个*表示任意返回类型，修饰符可省略
      * ..表示0或多个，即所有，controller后面的..表示到此路径为止
      * ..*.中的*表示一个单词，即任意类，后面的.是包名的.
      * ..*.*(..)中第二个*表示任意方法，(..)表示方法中任意参数
      **/
     @Pointcut("execution(* com.kunbu.spring.controller..*.*(..)) || @annotation(com.kunbu.spring.annotation.LogAnnotation)")
-    public void pointCut() {}
+    public void pointCut() {
+    }
 
     @Around("pointCut()")
     public Object requestLog(ProceedingJoinPoint joinPoint) {
@@ -66,7 +69,7 @@ public class RequestLogUtil {
 
                 Signature signature = joinPoint.getSignature();
                 long timeCost = System.currentTimeMillis() - startTime;
-                if(timeCost >= CommonConstant.CONTROLLER_CONSUMPTION_MILLIONS) {
+                if (timeCost >= CommonConstant.CONTROLLER_CONSUMPTION_MILLIONS) {
                     logger.warn("api consume:{} ms, method:{}", timeCost, signature.toShortString());
                 }
                 log.setClassName(signature.getDeclaringTypeName());

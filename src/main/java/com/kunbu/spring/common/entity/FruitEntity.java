@@ -4,7 +4,8 @@ import java.io.Serializable;
 
 /**
  * fruit
- * @author 
+ *
+ * @author
  */
 public class FruitEntity implements Serializable {
 

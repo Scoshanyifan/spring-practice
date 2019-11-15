@@ -13,7 +13,7 @@ public enum LogEnum {
 
     ;
 
-    LogEnum(String name){
+    LogEnum(String name) {
         this.name = name;
     }
 

@@ -1,174 +1,175 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kunbu.spring.dao.FruitMapper">
-  <resultMap id="BaseResultMap" type="com.kunbu.spring.common.entity.FruitEntity">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="type" jdbcType="VARCHAR" property="type" />
-    <result column="category" jdbcType="VARCHAR" property="category" />
-    <result column="price" jdbcType="INTEGER" property="price" />
-    <result column="user_id" jdbcType="INTEGER" property="userId" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    id, `type`, category, price, user_id
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from fruit
-    where id = #{id,jdbcType=INTEGER}
-  </select>
+    <resultMap id="BaseResultMap" type="com.kunbu.spring.common.entity.FruitEntity">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="type" jdbcType="VARCHAR" property="type"/>
+        <result column="category" jdbcType="VARCHAR" property="category"/>
+        <result column="price" jdbcType="INTEGER" property="price"/>
+        <result column="user_id" jdbcType="INTEGER" property="userId"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, `type`, category, price, user_id
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from fruit
+        where id = #{id,jdbcType=INTEGER}
+    </select>
 
-  <select id="getByTypeBetweenPrice_annotation" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from fruit
-    where type = #{type,jdbcType=VARCHAR}
-    <if test="min != null">
-      AND price &gt;= #{min}
-    </if>
-    <if test="max != null">
-      AND price &lt;= #{max}
-    </if>
-  </select>
+    <select id="getByTypeBetweenPrice_annotation" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from fruit
+        where type = #{type,jdbcType=VARCHAR}
+        <if test="min != null">
+            AND price &gt;= #{min}
+        </if>
+        <if test="max != null">
+            AND price &lt;= #{max}
+        </if>
+    </select>
 
-  <select id="getByTypeBetweenPrice_noAnnotation" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from fruit
-    where type = #{type,jdbcType=VARCHAR}
-    <if test="min != null">
-      AND price &gt;= #{min}
-    </if>
-    <if test="max != null">
-      AND price &lt;= #{max}
-    </if>
-  </select>
+    <select id="getByTypeBetweenPrice_noAnnotation" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from fruit
+        where type = #{type,jdbcType=VARCHAR}
+        <if test="min != null">
+            AND price &gt;= #{min}
+        </if>
+        <if test="max != null">
+            AND price &lt;= #{max}
+        </if>
+    </select>
 
-  <select id="getByTypeBetweenPrice_paramN" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from fruit
-    where type = #{param1,jdbcType=VARCHAR}
-    <if test="param2 != null">
-      AND price &gt;= #{param2}
-    </if>
-    <if test="param3 != null">
-      AND price &lt;= #{param3}
-    </if>
-  </select>
+    <select id="getByTypeBetweenPrice_paramN" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from fruit
+        where type = #{param1,jdbcType=VARCHAR}
+        <if test="param2 != null">
+            AND price &gt;= #{param2}
+        </if>
+        <if test="param3 != null">
+            AND price &lt;= #{param3}
+        </if>
+    </select>
 
-  <select id="getByCategory_singleParam" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from fruit
-    <trim prefix="WHERE" prefixOverrides="AND">
-      <if test="category != null">
-        AND category LIKE concat('%',#{category},'%')
-      </if>
-    </trim>
-  </select>
+    <select id="getByCategory_singleParam" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from fruit
+        <trim prefix="WHERE" prefixOverrides="AND">
+            <if test="category != null">
+                AND category LIKE concat('%',#{category},'%')
+            </if>
+        </trim>
+    </select>
 
-  <select id="getByTypes_singleParamList" parameterType="java.util.List" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from fruit
-    where type in
-    <foreach collection="types" item="type" open="(" separator="," close=")" >
-      #{type}
-    </foreach>
-  </select>
+    <select id="getByTypes_singleParamList" parameterType="java.util.List" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from fruit
+        where type in
+        <foreach collection="types" item="type" open="(" separator="," close=")">
+            #{type}
+        </foreach>
+    </select>
 
-  <select id="getByQuery_singleParamEntity" parameterType="com.kunbu.spring.common.param.FruitQuery" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from fruit
-    <trim prefix="WHERE" prefixOverrides="AND">
-      <if test="type != null">
-        AND `type` = #{type,jdbcType=VARCHAR}
-      </if>
-      <if test="category != null">
-        AND category = #{category,jdbcType=VARCHAR}
-      </if>
-      <if test="min != null">
-        AND price &gt;= #{min}
-      </if>
-      <if test="max != null">
-        AND price &lt;= #{max}
-      </if>
-    </trim>
-  </select>
+    <select id="getByQuery_singleParamEntity" parameterType="com.kunbu.spring.common.param.FruitQuery"
+            resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from fruit
+        <trim prefix="WHERE" prefixOverrides="AND">
+            <if test="type != null">
+                AND `type` = #{type,jdbcType=VARCHAR}
+            </if>
+            <if test="category != null">
+                AND category = #{category,jdbcType=VARCHAR}
+            </if>
+            <if test="min != null">
+                AND price &gt;= #{min}
+            </if>
+            <if test="max != null">
+                AND price &lt;= #{max}
+            </if>
+        </trim>
+    </select>
 
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from fruit
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.kunbu.spring.common.entity.FruitEntity">
-    insert into fruit (id, `type`, category, 
-      price, user_id)
-    values (#{id,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR}, #{category,jdbcType=VARCHAR}, 
-      #{price,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER})
-  </insert>
-  <insert id="insertSelective" parameterType="com.kunbu.spring.common.entity.FruitEntity">
-    insert into fruit
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="type != null">
-        `type`,
-      </if>
-      <if test="category != null">
-        category,
-      </if>
-      <if test="price != null">
-        price,
-      </if>
-      <if test="userId != null">
-        user_id,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="type != null">
-        #{type,jdbcType=VARCHAR},
-      </if>
-      <if test="category != null">
-        #{category,jdbcType=VARCHAR},
-      </if>
-      <if test="price != null">
-        #{price,jdbcType=INTEGER},
-      </if>
-      <if test="userId != null">
-        #{userId,jdbcType=INTEGER},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.kunbu.spring.common.entity.FruitEntity">
-    update fruit
-    <set>
-      <if test="type != null">
-        `type` = #{type,jdbcType=VARCHAR},
-      </if>
-      <if test="category != null">
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from fruit
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.kunbu.spring.common.entity.FruitEntity">
+        insert into fruit (id, `type`, category,
+        price, user_id)
+        values (#{id,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR}, #{category,jdbcType=VARCHAR},
+        #{price,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER})
+    </insert>
+    <insert id="insertSelective" parameterType="com.kunbu.spring.common.entity.FruitEntity">
+        insert into fruit
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="type != null">
+                `type`,
+            </if>
+            <if test="category != null">
+                category,
+            </if>
+            <if test="price != null">
+                price,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="category != null">
+                #{category,jdbcType=VARCHAR},
+            </if>
+            <if test="price != null">
+                #{price,jdbcType=INTEGER},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.kunbu.spring.common.entity.FruitEntity">
+        update fruit
+        <set>
+            <if test="type != null">
+                `type` = #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="category != null">
+                category = #{category,jdbcType=VARCHAR},
+            </if>
+            <if test="price != null">
+                price = #{price,jdbcType=INTEGER},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.kunbu.spring.common.entity.FruitEntity">
+        update fruit
+        set `type` = #{type,jdbcType=VARCHAR},
         category = #{category,jdbcType=VARCHAR},
-      </if>
-      <if test="price != null">
         price = #{price,jdbcType=INTEGER},
-      </if>
-      <if test="userId != null">
-        user_id = #{userId,jdbcType=INTEGER},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.kunbu.spring.common.entity.FruitEntity">
-    update fruit
-    set `type` = #{type,jdbcType=VARCHAR},
-      category = #{category,jdbcType=VARCHAR},
-      price = #{price,jdbcType=INTEGER},
-      user_id = #{userId,jdbcType=INTEGER}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+        user_id = #{userId,jdbcType=INTEGER}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
 </mapper>

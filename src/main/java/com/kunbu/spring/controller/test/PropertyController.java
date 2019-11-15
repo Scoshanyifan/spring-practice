@@ -55,7 +55,7 @@ public class PropertyController {
     public ApiResult getProperty(@RequestParam(required = false) String key) {
         /**
          * 通过类加载来读取properties
-        **/
+         **/
         logger.info(">>> property util:{}", PropertiesUtil.getValue("user.id"));
         logger.info(">>> environment, key:[{}], value:[{}]", key, environmentUtil.getValue(key, key));
         logger.info(">>> properties, id:{}, name:{}", propertiesBean.getId(), propertiesBean.getName());

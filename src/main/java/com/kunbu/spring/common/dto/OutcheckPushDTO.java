@@ -7,24 +7,42 @@ package com.kunbu.spring.common.dto;
  **/
 public class OutcheckPushDTO extends BaseOutsidePushDTO {
 
-    /** 产品型号 */
+    /**
+     * 产品型号
+     */
     private String productNumber;
-    /** 产品编码 */
+    /**
+     * 产品编码
+     */
     private String productCode;
-    /** 设备MAC */
+    /**
+     * 设备MAC
+     */
     private String mac;
-    /** 设备SN */
+    /**
+     * 设备SN
+     */
     private String sn;
-    /** 操作人 */
+    /**
+     * 操作人
+     */
     private String operatorName;
-    /** 操作时间 */
+    /**
+     * 操作时间
+     */
     private String operateTime;
-    /** 额外信息 */
+    /**
+     * 额外信息
+     */
     private String ext;
 
-    /** 通信类型 */
+    /**
+     * 通信类型
+     */
     private String communicateType;
-    /** 产品类型 */
+    /**
+     * 产品类型
+     */
     private String productType;
 
     public OutcheckPushDTO(String productNumber, String productCode, String mac, String sn, String operatorName, String operateTime, String ext, String communicateType, String productType) {
