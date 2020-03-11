@@ -31,6 +31,7 @@ public class PropertyController {
      * 1.Environment读取
      **/
     @Autowired
+    @Deprecated
     private EnvironmentUtil environmentUtil;
 
     /**
@@ -51,16 +52,29 @@ public class PropertyController {
     @Value("${logging.config:classpath:2333}")
     private String serverPort;
 
+    /**
+     * 5.静态属性读取
+     **/
+    private static String staticField;
+
+    @Value("${static.field:2333}")
+    public void setStaticField(String staticField) {
+        PropertyController.staticField = staticField;
+    }
+
     @GetMapping("/prop")
     public ApiResult getProperty(@RequestParam(required = false) String key) {
         /**
-         * 通过类加载来读取properties
+         * 6.通过类加载来读取properties
          **/
         logger.info(">>> property util:{}", PropertiesUtil.getValue("user.id"));
-        logger.info(">>> environment, key:[{}], value:[{}]", key, environmentUtil.getValue(key, key));
+
+//        logger.info(">>> environment, key:[{}], value:[{}]", key, environmentUtil.getValue(key, key));
+
         logger.info(">>> properties, id:{}, name:{}", propertiesBean.getId(), propertiesBean.getName());
         logger.info(">>> yml, port:{}", ymlBean.getPort());
         logger.info(">>> @Value:{}", serverPort);
+        logger.info(">>> staticField:{}", staticField);
 
         return ApiResult.success();
     }
