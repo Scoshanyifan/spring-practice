@@ -1,10 +1,7 @@
 package com.kunbu.spring.controller.test;
 
 import com.kunbu.spring.common.ApiResult;
-import com.kunbu.spring.config.EnvironmentUtil;
-import com.kunbu.spring.config.PropertiesBean;
-import com.kunbu.spring.config.PropertiesUtil;
-import com.kunbu.spring.config.YmlBean;
+import com.kunbu.spring.config.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,15 +49,6 @@ public class PropertyController {
     @Value("${logging.config:classpath:2333}")
     private String serverPort;
 
-    /**
-     * 5.静态属性读取
-     **/
-    private static String staticField;
-
-    @Value("${static.field:2333}")
-    public void setStaticField(String staticField) {
-        PropertyController.staticField = staticField;
-    }
 
     @GetMapping("/prop")
     public ApiResult getProperty(@RequestParam(required = false) String key) {
@@ -74,7 +62,7 @@ public class PropertyController {
         logger.info(">>> properties, id:{}, name:{}", propertiesBean.getId(), propertiesBean.getName());
         logger.info(">>> yml, port:{}", ymlBean.getPort());
         logger.info(">>> @Value:{}", serverPort);
-        logger.info(">>> staticField:{}", staticField);
+        logger.info(">>> staticField:{}", StaticConfig.getValue());
 
         return ApiResult.success();
     }
